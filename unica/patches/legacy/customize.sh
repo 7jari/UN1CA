@@ -195,8 +195,10 @@ fi
 
 # Ensure Knox Matrix support
 # - Check if target firmware runs on One UI 5.1.1 or above
+# - Otherwise check if target device is JDM
 TARGET_FIRMWARE_PATH="$(cut -d "/" -f 1 -s <<< "$TARGET_FIRMWARE")_$(cut -d "/" -f 2 -s <<< "$TARGET_FIRMWARE")"
-if [ "$(GET_PROP "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/build.prop" "ro.build.version.oneui")" -lt "50101" ]; then
+if [ "$(GET_PROP "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/build.prop" "ro.build.version.oneui")" -lt "50101" ] || \
+        [[ "$(GET_FLOATING_FEATURE_CONFIG "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/etc/floating_feature.xml" "SEC_FLOATING_FEATURE_COMMON_CONFIG_DEVICE_MANUFACTURING_TYPE")" == "jdm" ]]; then
     PATCHED=true
     DELETE_FROM_WORK_DIR "system" "system/bin/fabric_crypto"
     DELETE_FROM_WORK_DIR "system" "system/etc/init/fabric_crypto.rc"
