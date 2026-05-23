@@ -1,0 +1,4 @@
+id=selinux
+name=SELinux fix
+author=furbanoramos21, 7jari
+description=Updates vendor sepolicy to align with M05 sepolicy.
