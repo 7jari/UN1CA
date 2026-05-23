@@ -7,6 +7,8 @@ GET_FINGERPRINT_SENSOR_TYPE()
         echo "optical"
     elif [[ "$1" == *"side"* ]]; then
         echo "side"
+    elif [[ "$1" == *"none"* ]]; then
+        echo "none"
     else
         ABORT "Unknown fingerprint sensor type: \"$1\". Aborting"
     fi
@@ -272,25 +274,26 @@ fi
 
 # SEC_PRODUCT_FEATURE_FINGERPRINT_CONFIG_SENSOR
 if [[ "$SOURCE_FINGERPRINT_CONFIG_SENSOR" != "$TARGET_FINGERPRINT_CONFIG_SENSOR" ]]; then
-    SMALI_PATCH "system" "system/framework/framework.jar" \
-        "smali_classes6/com/samsung/android/bio/fingerprint/SemFingerprintManager.smali" "replace" \
-        "getMaxTemplateNumberFromSPF()I" \
-        "$SOURCE_FINGERPRINT_CONFIG_SENSOR" \
-        "$TARGET_FINGERPRINT_CONFIG_SENSOR"
-    SMALI_PATCH "system" "system/framework/framework.jar" \
-        "smali_classes6/com/samsung/android/bio/fingerprint/SemFingerprintManager.smali" "replace" \
-        "getProductFeatureValue(Landroid/content/Context;)Ljava/lang/String;" \
-        "$SOURCE_FINGERPRINT_CONFIG_SENSOR" \
-        "$TARGET_FINGERPRINT_CONFIG_SENSOR"
-    SMALI_PATCH "system" "system/framework/framework.jar" \
-        "smali_classes6/com/samsung/android/bio/fingerprint/SemFingerprintManager\$Characteristics.smali" "replaceall" \
-        "$SOURCE_FINGERPRINT_CONFIG_SENSOR" \
-        "$TARGET_FINGERPRINT_CONFIG_SENSOR"
-    SMALI_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" \
-        "smali_classes4/com/samsung/android/settings/biometrics/fingerprint/FingerprintSettingsUtils.smali" "replaceall" \
-        "$SOURCE_FINGERPRINT_CONFIG_SENSOR" \
-        "$TARGET_FINGERPRINT_CONFIG_SENSOR"
-
+    if [[ "$(GET_FINGERPRINT_SENSOR_TYPE "$TARGET_FINGERPRINT_CONFIG_SENSOR")" != "none" ]]; then
+        SMALI_PATCH "system" "system/framework/framework.jar" \
+            "smali_classes6/com/samsung/android/bio/fingerprint/SemFingerprintManager.smali" "replace" \
+            "getMaxTemplateNumberFromSPF()I" \
+            "$SOURCE_FINGERPRINT_CONFIG_SENSOR" \
+            "$TARGET_FINGERPRINT_CONFIG_SENSOR"
+        SMALI_PATCH "system" "system/framework/framework.jar" \
+            "smali_classes6/com/samsung/android/bio/fingerprint/SemFingerprintManager.smali" "replace" \
+            "getProductFeatureValue(Landroid/content/Context;)Ljava/lang/String;" \
+            "$SOURCE_FINGERPRINT_CONFIG_SENSOR" \
+            "$TARGET_FINGERPRINT_CONFIG_SENSOR"
+        SMALI_PATCH "system" "system/framework/framework.jar" \
+            "smali_classes6/com/samsung/android/bio/fingerprint/SemFingerprintManager\$Characteristics.smali" "replaceall" \
+            "$SOURCE_FINGERPRINT_CONFIG_SENSOR" \
+            "$TARGET_FINGERPRINT_CONFIG_SENSOR"
+        SMALI_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" \
+            "smali_classes4/com/samsung/android/settings/biometrics/fingerprint/FingerprintSettingsUtils.smali" "replaceall" \
+            "$SOURCE_FINGERPRINT_CONFIG_SENSOR" \
+            "$TARGET_FINGERPRINT_CONFIG_SENSOR"
+    fi
     if [[ "$(GET_FINGERPRINT_SENSOR_TYPE "$SOURCE_FINGERPRINT_CONFIG_SENSOR")" != "$(GET_FINGERPRINT_SENSOR_TYPE "$TARGET_FINGERPRINT_CONFIG_SENSOR")" ]]; then
         if [[ "$(GET_FINGERPRINT_SENSOR_TYPE "$SOURCE_FINGERPRINT_CONFIG_SENSOR")" == "ultrasonic" ]]; then
             if [[ "$(GET_FINGERPRINT_SENSOR_TYPE "$TARGET_FINGERPRINT_CONFIG_SENSOR")" == "optical" ]]; then
@@ -401,6 +404,8 @@ if [[ "$SOURCE_FINGERPRINT_CONFIG_SENSOR" != "$TARGET_FINGERPRINT_CONFIG_SENSOR"
                         "sput-boolean v2, Lcom/android/server/biometrics/SemBiometricFeature;->FP_FEATURE_WOF_OPTION_DEFAULT_OFF:Z" \
                         > /dev/null
                 fi
+            elif [[ "$(GET_FINGERPRINT_SENSOR_TYPE "$TARGET_FINGERPRINT_CONFIG_SENSOR")" == "none" ]]; then
+                true
             elif [[ "$(GET_FINGERPRINT_SENSOR_TYPE "$TARGET_FINGERPRINT_CONFIG_SENSOR")" != "ultrasonic" ]]; then
                 # TODO handle this condition
                 LOG_MISSING_PATCHES "SOURCE_FINGERPRINT_CONFIG_SENSOR" "TARGET_FINGERPRINT_CONFIG_SENSOR"
@@ -415,7 +420,8 @@ if [[ "$SOURCE_FINGERPRINT_CONFIG_SENSOR" != "$TARGET_FINGERPRINT_CONFIG_SENSOR"
         fi
     fi
 
-    if [[ "$SOURCE_FINGERPRINT_CONFIG_SENSOR" != "$TARGET_FINGERPRINT_CONFIG_SENSOR" ]]; then
+    if [[ "$SOURCE_FINGERPRINT_CONFIG_SENSOR" != "$TARGET_FINGERPRINT_CONFIG_SENSOR" ]] && \
+        [[ "$(GET_FINGERPRINT_SENSOR_TYPE "$TARGET_FINGERPRINT_CONFIG_SENSOR")" != "none" ]]; then
         SMALI_PATCH "system" "system/priv-app/BiometricSetting/BiometricSetting.apk" \
             "smali/com/samsung/android/biometrics/app/setting/DisplayStateManager.smali" "replace" \
             "<init>(Lcom/samsung/android/biometrics/app/setting/BiometricsUIService;)V" \
