@@ -8,13 +8,12 @@
   <a href="https://github.com/salvogiangri/UN1CA/actions/workflows/build.yml"><img loading="lazy" src="https://img.shields.io/github/actions/workflow/status/salvogiangri/UN1CA/build.yml?style=for-the-badge"/></a>
   <a href="https://crowdin.com/project/UN1CA"><img loading="lazy" src="https://img.shields.io/badge/Crowdin-263238?style=for-the-badge&logo=crowdin"/></a>
 </p>
-<p align="center">UN1CA <i>(/ˈu.ni.ka/)</i> is a work-in-progress custom firmware for Samsung Galaxy devices.</p>
+<p align="center">TestaROM is a work-in-progress custom firmware for Samsung Galaxy devices, based on the UN1CA build system.</p>
 
-<p align="center">
-  <a href="https://github.com/salvogiangri/UN1CA/discussions">🚀 Discussions</a>
-  •
-  <a href="https://t.me/unicarom">💬 Telegram</a>
-</p>
+# What is TestaROM?
+TestaROM is a work-in-progress ROM for Samsung devices with the SM7125 SOC (a52q/a72q), based on the UN1CA build system and it's patches.
+
+The goal is to deliver the latest One UI version to devices which have already lost support years ago (One UI 6.1).
 
 # What is UN1CA?
 UN1CA is a work-in-progress custom firmware for Samsung Galaxy devices, designed to provide a refined, optimized and more rich One UI experience.
@@ -26,11 +25,9 @@ The goal is to deliver a fast, smooth and modern UX while offering additional to
 
 Any form of contribution, suggestions, bug report or feature request for the project will be welcome.
 
-# Features
-### Core features:
-- Based on the latest stable Galaxy S22 firmware
+# Features:
+- Based on the latest stable Galaxy A36 firmware
 - EROFS powered
-- Galaxy S25 wallpapers/sounds included
 - Galaxy AI support
   - Audio eraser
   - Browsing assist
@@ -38,11 +35,9 @@ Any form of contribution, suggestions, bug report or feature request for the pro
   - Drawing assist
   - Interpreter
   - Note assist
-  - Now brief
-  - Photo assist
-  - Semantic search
   - Transcript assist
   - Writing assist
+  - Health assist
 - High end animations
 - Native/live blur support
 - AOD clock transition support
@@ -53,7 +48,6 @@ Any form of contribution, suggestions, bug report or feature request for the pro
 - Object, shadow and reflection eraser support
 - Image clipper support
 - Multi user support
-- Samsung DeX support*
 - Camera privacy toggle support
 - Debloated from useless system services/additional apps
 - Dual Messenger available for all apps
@@ -62,27 +56,6 @@ Any form of contribution, suggestions, bug report or feature request for the pro
 - Auto PIN confirm with 4 digits
 - [BluetoothLibraryPatcher](https://github.com/3arthur6/BluetoothLibraryPatcher) integrated
 - [KnoxPatch](https://github.com/salvogiangri/KnoxPatch) integrated
-- Extra CSC features enabled (Call recording, Hiya, Network speed in status bar, AltZLife)
-
-\* DeX via HDMI not available for devices without USB-C DP support
-
-### UN1CA-exclusive features:
-- Integrated OTA updates app
-- Native/live blur toggle
-- One UI Home animations option
-- Vulkan renderer toggle
-- Key attestation spoof ([TrickyStore](https://github.com/5ec1cff/TrickyStore)) options*
-- Play Integrity Fix integrated
-- Ability to hide installed apps ([Hide My Applist](https://github.com/Dr-TSNG/Hide-My-Applist))
-- Ability to hide developer options
-- Allow app downgrade toggle
-- Allow installing apps with old targetSdk toggle
-- Allow secure screenshot toggle
-- Screenshot/screen recording detection toggle
-- Unlimited backup storage on Google Photos
-- Games FPS unlock toggle
-
-\* Requires a valid keybox
 
 # Licensing
 This project is licensed under the terms of the [GNU General Public License v3.0](LICENSE). External dependencies might be distributed under a different license, such as:
@@ -106,6 +79,12 @@ A special thanks goes to the following for their invaluable contributions in no 
 - **[iDrinkCoffee](https://github.com/iDrinkCoffee-TG)** and **[RisenID](https://github.com/RisenID)** for their support
 - **[LineageOS Team](https://www.lineageos.org/)** for their original [OTA updater implementation](https://github.com/LineageOS/android_packages_apps_Updater)
 - *All the UN1CA project forks, contributors, testers and users ❤️*
+
+# TestaROM Credits
+- **[MonsterROM](https://github.com/devcore94/MonsterROM)** for some adapted UN1CA patches for One UI 8.5
+- **[Valeryn](https://github.com/frostg-012)** for his inital platform and target trees for SM7125.
+- **[tsn](https://github.com/tisenu100)** for his desixtification patch from LegacyUI.
+- **[Wallsthetix](https://t.me/Wallsthetix)** for making this amazing banner for the ROM.
 
 # Stargazers over time
 [![Stargazers over time](https://starchart.cc/salvogiangri/UN1CA.svg)](https://starchart.cc/salvogiangri/UN1CA)

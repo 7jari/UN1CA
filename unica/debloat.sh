@@ -19,6 +19,11 @@ SYSTEM_DEBLOAT+="
 system/etc/proca.db
 "
 
+# CIDManager
+SYSTEM_DEBLOAT+="
+system/priv-app/CIDManager
+"
+
 # Samsung SIM Unlock
 SYSTEM_DEBLOAT+="
 system/bin/ssud
