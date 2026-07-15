@@ -1,6 +1,6 @@
 LOG_STEP_IN "- Adding Google Hotword Enrollment blobs from a73xqxx"
-DELETE_FROM_WORK_DIR "product" "priv-app/HotwordEnrollmentXGoogleEx6_WIDEBAND_SMALL"
-DELETE_FROM_WORK_DIR "product" "priv-app/HotwordEnrollmentYGoogleEx6_WIDEBAND_SMALL"
+DELETE_FROM_WORK_DIR "product" "priv-app/HotwordEnrollmentOKGoogleEx4HEXAGON"
+DELETE_FROM_WORK_DIR "product" "priv-app/HotwordEnrollmentXGoogleEx4HEXAGON"
 ADD_TO_WORK_DIR "a73xqxx" "product" "priv-app/HotwordEnrollmentOKGoogleEx3HEXAGON" 0 0 755 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "a73xqxx" "product" "priv-app/HotwordEnrollmentXGoogleEx3HEXAGON" 0 0 755 "u:object_r:system_file:s0"
 LOG_STEP_OUT
@@ -56,5 +56,23 @@ LOG_STEP_OUT
 LOG_STEP_IN "- Fix SEPolicy"
 DELETE_FROM_WORK_DIR "system_ext" "etc/selinux/mapping/30.0.cil"
 ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "etc/selinux/mapping/30.0.cil" 0 0 644 "u:object_r:sepolicy_file:s0"
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Hex-patch libmeminfo.so to bypass GPU BPF stats"
+# ReadGpuTotalUsageKb tail-calls ReadProcessGpuUsageKb which opens GPU BPF maps.
+# abortOnMismatch calls __libcpp_verbose_abort in dead code after epilogue;
+# patching abort->ret corrupts the stack (SP/FP not restored), causing SIGSEGV.
+# Instead, stub ReadGpuTotalUsageKb to return 0 immediately:
+#   bti c; str xzr,[x0]; mov x0,#0; ret
+HEX_PATCH "$WORK_DIR/system/system/lib64/libmeminfo.so" "5f2403d5e20300aae0031f2ae1031f2a" "5f2403d51f0000f8000080d2c0035fd6"
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Hex-patch libandroid_runtime.so to bypass GPU BPF stats"
+# getGpuTotalUsageKb -> ReadGpuTotalUsageKb -> opens BPF map -> fdsan abort
+# Replace getGpuTotalUsageKb with: mov x0, #0; ret (return 0, skip GPU stats)
+HEX_PATCH "$WORK_DIR/system/system/lib64/libandroid_runtime.so" "ff8300d1fd7b01a9fd430091e0230091ff0700f951fe0394" "000080d2c0035fd6fd430091e0230091ff0700f951fe0394"
+# KernelAllocationStats_getGpuAllocations -> ReadPerProcessGpuMem -> BPF map -> abort
+# Replace KernelAllocationStats_getGpuAllocations with: mov x0, #0; ret (return 0, skip GPU stats)
+HEX_PATCH "$WORK_DIR/system/system/lib64/libandroid_runtime.so" "3f2303d5ff0302d1fd7b03a9f92300f9f85f05a9f65706a9f44f07a9fdc3009100e4006ff40300aa" "000080d2c0035fd6fd7b03a9f92300f9f85f05a9f65706a9f44f07a9fdc3009100e4006ff40300aa"
 LOG_STEP_OUT
 
