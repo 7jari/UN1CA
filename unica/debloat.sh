@@ -337,6 +337,13 @@ system/app/VoiceAccess
 system/etc/sysconfig/feature-a11y-preload-voacc.xml
 "
 
+# Samsung Visual Cloud Core (C2PA)
+# APK expects enableTrustCheck JNI but libC2paDps.camera.samsung.so doesn't export it
+SYSTEM_DEBLOAT+="
+system/app/VisualCloudCore
+system/lib64/libC2paDps.camera.samsung.so
+"
+
 # YouTube
 PRODUCT_DEBLOAT+="
 app/YouTube
