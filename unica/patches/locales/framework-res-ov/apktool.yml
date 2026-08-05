@@ -1,0 +1,18 @@
+version: v3.0.2-11-d6ab7c3a-SNAPSHOT
+apkFileName: framework-res__locales__rro.apk
+usesFramework:
+  ids:
+  - 1
+  tag: S7110ZHS8GZF2
+sdkInfo:
+  minSdkVersion: 36
+  targetSdkVersion: 36
+versionInfo:
+  versionCode: 1
+  versionName: 1.0
+resourcesInfo:
+  packageId: 127
+  compactEntries: true
+  keepRawValues: true
+doNotCompress:
+- arsc

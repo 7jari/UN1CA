@@ -1,0 +1,4 @@
+id=locales
+name=Full system locale support
+author=testamic2
+description=Injects the missing global locales for SystemUI, Settings and a framework-res RRO overlay.
