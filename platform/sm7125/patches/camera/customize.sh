@@ -22,3 +22,18 @@ DELETE_FROM_WORK_DIR "vendor" "etc/midas"
 ADD_TO_WORK_DIR "a73xqxx" "vendor" "etc/midas" 0 2000 755 "u:object_r:vendor_configs_file:s0"
 LOG_STEP_OUT
 
+LOG_STEP_IN "- Patching SamsungCamera zoom pill to include 0.5x"
+DECODE_APK "system" "system/priv-app/SamsungCamera/SamsungCamera.apk"
+SMALI="smali_classes4/com/sec/android/app/camera/shootingmode/common/zoom/ShootingModeZoomController.smali"
+EVAL "mkdir -p \"$(dirname "$APKTOOL_DIR/system/priv-app/SamsungCamera/SamsungCamera.apk/$SMALI")\""
+EVAL "cp -a \"$MODPATH/$SMALI\" \"$APKTOOL_DIR/system/priv-app/SamsungCamera/SamsungCamera.apk/$SMALI\""
+
+SMALI="smali_classes4/com/sec/android/app/camera/setting/repository/CameraSettingsImpl.smali"
+EVAL "mkdir -p \"$(dirname "$APKTOOL_DIR/system/priv-app/SamsungCamera/SamsungCamera.apk/$SMALI")\""
+EVAL "cp -a \"$MODPATH/$SMALI\" \"$APKTOOL_DIR/system/priv-app/SamsungCamera/SamsungCamera.apk/$SMALI\""
+
+SMALI="smali_classes4/com/sec/android/app/camera/engine/core/CapabilityImpl.smali"
+EVAL "mkdir -p \"$(dirname "$APKTOOL_DIR/system/priv-app/SamsungCamera/SamsungCamera.apk/$SMALI")\""
+EVAL "cp -a \"$MODPATH/$SMALI\" \"$APKTOOL_DIR/system/priv-app/SamsungCamera/SamsungCamera.apk/$SMALI\""
+LOG_STEP_OUT
+
