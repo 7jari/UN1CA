@@ -74,7 +74,7 @@ LOG_STEP_OUT
 LOG_STEP_IN "- Hex-patch libandroid_runtime.so to bypass GPU BPF stats"
 # getGpuTotalUsageKb -> ReadGpuTotalUsageKb -> opens BPF map -> fdsan abort
 # Replace getGpuTotalUsageKb with: mov x0, #0; ret (return 0, skip GPU stats)
-HEX_PATCH "$WORK_DIR/system/system/lib64/libandroid_runtime.so" "ff8300d1fd7b01a9fd430091e0230091ff0700f951fe0394" "000080d2c0035fd6fd430091e0230091ff0700f951fe0394"
+HEX_PATCH "$WORK_DIR/system/system/lib64/libandroid_runtime.so" "3f2303d5ff8300d1fd7b01a9fd430091e0230091ff0700f939fe0394" "000080d2c0035fd6fd7b01a9fd430091e0230091ff0700f939fe0394"
 # KernelAllocationStats_getGpuAllocations -> ReadPerProcessGpuMem -> BPF map -> abort
 # Replace KernelAllocationStats_getGpuAllocations with: mov x0, #0; ret (return 0, skip GPU stats)
 HEX_PATCH "$WORK_DIR/system/system/lib64/libandroid_runtime.so" "3f2303d5ff0302d1fd7b03a9f92300f9f85f05a9f65706a9f44f07a9fdc3009100e4006ff40300aa" "000080d2c0035fd6fd7b03a9f92300f9f85f05a9f65706a9f44f07a9fdc3009100e4006ff40300aa"
