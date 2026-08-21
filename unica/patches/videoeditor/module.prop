@@ -1,0 +1,4 @@
+id=videoeditor
+name=Video Editor Fix
+author=furbanoramos21
+description=Fixes Video Editor on unsupported devices by using a spoof prop.
