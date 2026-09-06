@@ -2,6 +2,13 @@
 _LOG() { if $DEBUG; then LOGW "$1"; else ABORT "$1"; fi }
 # ]
 
+# SEC_PRODUCT_FEATURE_COMMON_CONFIG_DEVICE_MANUFACTURING_TYPE
+if [[ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_CONFIG_DEVICE_MANUFACTURING_TYPE")" == "jdm" ]]; then
+    LOG "\033[0;33m! JDM device detected. Skipping\033[0m"
+    unset -f _LOG
+    return 0
+fi
+
 TARGET_FIRMWARE_PATH="$(cut -d "/" -f 1 -s <<< "$TARGET_FIRMWARE")_$(cut -d "/" -f 2 -s <<< "$TARGET_FIRMWARE")"
 
 if [ -f "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/etc/libnfc-nci.conf" ]; then
