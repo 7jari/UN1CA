@@ -10,9 +10,9 @@ if ! $SOURCE_HAS_CLOCKPACK; then
         DELETE_FROM_WORK_DIR "system" "system/etc/permissions/privapp-permissions-com.samsung.android.app.aodservice.xml"
         DELETE_FROM_WORK_DIR "system" "system/priv-app/AODService_v80"
 
-        ADD_TO_WORK_DIR "gta9pxxx" "system" "system/etc/permissions/com.samsung.feature.clockpack_v10.xml" 0 0 644 "u:object_r:system_file:s0"
-        ADD_TO_WORK_DIR "gta9pxxx" "system" "system/etc/permissions/privapp-permissions-com.samsung.android.app.clockpack.xml" 0 0 644 "u:object_r:system_file:s0"
-        ADD_TO_WORK_DIR "gta9pxxx" "system" "system/priv-app/ClockPack_v80/ClockPack_v80.apk" 0 0 755 "u:object_r:system_file:s0"
+        ADD_TO_WORK_DIR "gta9p2xxx" "system" "system/etc/permissions/com.samsung.feature.clockpack_v10.xml" 0 0 644 "u:object_r:system_file:s0"
+        ADD_TO_WORK_DIR "gta9p2xxx" "system" "system/etc/permissions/privapp-permissions-com.samsung.android.app.clockpack.xml" 0 0 644 "u:object_r:system_file:s0"
+        ADD_TO_WORK_DIR "gta9p2xxx" "system" "system/priv-app/ClockPack_v80/ClockPack_v80.apk" 0 0 755 "u:object_r:system_file:s0"
 
         SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_FRAMEWORK_CONFIG_AOD_ITEM" --delete
     else

@@ -436,7 +436,7 @@ fi
 # SEC_PRODUCT_FEATURE_COMMON_SUPPORT_MDNIE_BLUE_FILTER
 if [ "$SOURCE_COMMON_CONFIG_MDNIE_MODE" -ne "0" ]; then
     if [ "$TARGET_COMMON_CONFIG_MDNIE_MODE" -eq "0" ]; then
-        ADD_TO_WORK_DIR "gta9pxxx" "system" "system/priv-app/BlueLightFilter/BlueLightFilter.apk" 0 0 644 "u:object_r:system_file:s0"
+        ADD_TO_WORK_DIR "gta9p2xxx" "system" "system/priv-app/BlueLightFilter/BlueLightFilter.apk" 0 0 644 "u:object_r:system_file:s0"
         APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" \
              "$MODPATH/mdnie/blf/SecSettings.apk/0001-Disable-SUPPORT_MDNIE_BLUE_FILTER-support.patch"
         APPLY_PATCH "system_ext" "priv-app/SystemUI/SystemUI.apk" \
