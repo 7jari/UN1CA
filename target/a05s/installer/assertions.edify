@@ -1,0 +1,5 @@
+is_substring("A057FXX", getprop("ro.boot.bootloader")) && verify_no_downgrade(getprop("ro.boot.bootloader"), "A057FXXU2BXA8") && abort("E3003: This package requires either Android 14 or 15 firmware.");
+is_substring("A057GXX", getprop("ro.boot.bootloader")) && verify_no_downgrade(getprop("ro.boot.bootloader"), "A057GXXU1BXA8") && abort("E3003: This package requires either Android 14 or 15 firmware.");
+is_substring("A057MUB", getprop("ro.boot.bootloader")) && verify_no_downgrade(getprop("ro.boot.bootloader"), "A057MUBU2BXB1") && abort("E3003: This package requires either Android 14 or 15 firmware.");
+is_substring("E145FXX", getprop("ro.boot.bootloader")) && verify_no_downgrade(getprop("ro.boot.bootloader"), "E145FXXU2BXA9") && abort("E3003: This package requires either Android 14 or 15 firmware.");
+is_substring("M145FXX", getprop("ro.boot.bootloader")) && verify_no_downgrade(getprop("ro.boot.bootloader"), "M145FXXU2BXB3") && abort("E3003: This package requires either Android 14 or 15 firmware.");
